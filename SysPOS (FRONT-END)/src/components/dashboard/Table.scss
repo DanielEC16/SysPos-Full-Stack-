@@ -1,0 +1,42 @@
+.content-table thead {
+  color: #ffffff;
+}
+.table-container::-webkit-scrollbar-track {
+  border-radius: 0 6px 6px 0;
+}
+td,
+th {
+  font-size: 1rem;
+  padding: 10px;
+}
+.table-container {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+.table-container .content-table {
+  border-collapse: collapse; /* Evita bordes duplicados */
+}
+.table-container .content-table thead {
+  position: sticky; /* Hacer que el encabezado sea sticky */
+  top: 0; /* Se mantiene en la parte superior */
+  z-index: 10; /* Asegura que esté por encima del contenido */
+}
+
+tbody tr:not(:last-child) {
+  border-bottom: 2px solid rgba(106, 106, 106, 0.1254901961); /* Aplica borde inferior excepto al último <tr> */
+}
+
+/* Personalización del scrollbar */
+.table-container::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar vertical */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del thumb */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color al pasar el mouse */
+} /*# sourceMappingURL=mantenimieto.css.map */
