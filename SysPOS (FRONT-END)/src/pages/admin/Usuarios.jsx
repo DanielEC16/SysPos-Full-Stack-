@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Table from "../../components/dashboard/Table";
 import "../scss/Usuarios.scss";
+import { Button, Modal} from "react-bootstrap";
 
-const FormCliente = () => {
+const FormCliente = ({view,action}) => {
   const [newClient, setNewClient] = useState({
     nombre: "",
     apellido: "",
@@ -12,29 +13,27 @@ const FormCliente = () => {
 
   return (
     <>
-        <div className="modal fade text-white" id="form-cliente" data-bs-theme="dark">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h2 className="modal-tittle fs-5">
-                  DATOS DEL CLIENTE
-                </h2>
-                <button type="button" className="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-              </div>
-              <div className="modal-body">
-                <form className="row m-0 g-3 needs-validation" novalidate>
-                  
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+      <Modal show={view} onHide={action} centered data-bs-theme="dark" className="text-white">
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={action}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={action}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
 
 const Usuarios = () => {
+  const [addCliente, setAddCliente] = useState(false);
+
   const [clientes, setClientes] = useState([]);
 
   const columns = [
@@ -70,7 +69,7 @@ const Usuarios = () => {
         });
       },
     },
-  ];  
+  ];
   useEffect(() => {
     listaClientes();
   }, []);
@@ -79,8 +78,8 @@ const Usuarios = () => {
       <div className="d-flex justify-content-between">
         <h1>Usuarios</h1>
         <div className="agregar-cliente">
-          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form-cliente">Agregar Cliente</button>
-          <FormCliente />
+          <Button onClick={()=>setAddCliente(true)}>Agregar Cliente</Button>
+          <FormCliente view={addCliente} action={() => setAddCliente(false)}/>
         </div>
       </div>
       <div className="tabla-clientes">
