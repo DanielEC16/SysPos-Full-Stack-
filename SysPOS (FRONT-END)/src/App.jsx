@@ -4,7 +4,7 @@ import Navbar from "./components/dashboard/Navbar";
 import Inicio from "./pages/admin/Inicio";
 import Usuarios from "./pages/admin/Usuarios";
 import Ventas from "./pages/admin/Ventas";
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Route, Routes } from 'react-router-dom'
 
 const App = () => {

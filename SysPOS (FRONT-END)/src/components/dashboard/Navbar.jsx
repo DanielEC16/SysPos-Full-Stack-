@@ -1,9 +1,19 @@
 import { Link, Outlet } from "react-router-dom";
 import "./Navbar.scss";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRightToBracket,
+  faBasketShopping,
+  faCircleChevronLeft,
+  faCircleChevronRight,
+  faHouse,
+  faTruckFast,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const menuNav = () => {
     setIsActive(!isActive);
   };
@@ -12,11 +22,9 @@ const Navbar = () => {
       <div className="admin-dashboard">
         <div className={`ds-left-menu ${isActive ? "menu-active" : ""}`}>
           <button className="btn-menu" onClick={menuNav}>
-            <i
-              className={`fa-solid ${
-                isActive ? "fa-circle-chevron-right" : "fa-circle-chevron-left"
-              }`}
-            ></i>
+            <FontAwesomeIcon
+              icon={isActive ? faCircleChevronRight : faCircleChevronLeft}
+            />
           </button>
           <div className="ds-perfil">
             <div className="foto">
@@ -34,25 +42,25 @@ const Navbar = () => {
             <ul className="ps-0">
               <li>
                 <Link to="/dashboard/inicio">
-                  <i className="fa-solid fa-house"></i>
+                  <FontAwesomeIcon icon={faHouse} />
                   <span>Inicio</span>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/productos">
-                  <i className="fa-solid fa-truck-fast"></i>
+                  <FontAwesomeIcon icon={faTruckFast} />
                   <span>Productos</span>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/ventas">
-                  <i className="fa-solid fa-basket-shopping"></i>
+                  <FontAwesomeIcon icon={faBasketShopping} />
                   <span>Ventas</span>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/usuarios">
-                  <i className="fa-solid fa-user"></i>
+                  <FontAwesomeIcon icon={faUser} />
                   <span>Usuarios</span>
                 </Link>
               </li>
@@ -60,7 +68,7 @@ const Navbar = () => {
           </div>
           <div className="sign-off">
             <Link to="/login" className="btn-sign-off">
-              <i className="fa-solid fa-arrow-right-to-bracket"></i>
+              <FontAwesomeIcon icon={faArrowRightToBracket} />
               <span>Cerrar Sesión</span>
             </Link>
           </div>
