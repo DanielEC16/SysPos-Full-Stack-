@@ -5,7 +5,7 @@ const Inicio = () => {
   return (
     <>
       <div>
-        <h1>Componente Tabla</h1>
+        <h1>Componente Tablitas</h1>
        
       </div>
     </>
