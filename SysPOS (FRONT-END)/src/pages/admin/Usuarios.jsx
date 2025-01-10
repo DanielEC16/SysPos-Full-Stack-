@@ -1,46 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Table from "../../components/dashboard/Table";
 import "../scss/Usuarios.scss";
-import { Button, Modal} from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
-const FormCliente = ({view,action}) => {
-  const [newClient, setNewClient] = useState({
-    nombre: "",
-    apellido: "",
-    dni: "",
-    telefono: "",
-  });
+export const FormCliente = ({ onClose }) => {
+  const modalRef = useRef(null);
+
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      onClose(); // Cierra el modal al hacer clic fuera.
+    }
+  };
+
 
   return (
-    <>
-      <Modal show={view} onHide={action} centered data-bs-theme="dark" className="text-white">
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={action}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={action}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <div className="form-modal">
+      <div className="form-content">
+        <h1>Agregar Cliente</h1>
+        <form>
+          <label htmlFor="nombre">Nombre</label>
+          <input type="text" id="nombre" />
+          <label htmlFor="apellido">Apellido</label>
+          <input type="text" id="apellido" />
+          <label htmlFor="dni">DNI</label>
+          <input type="text" id="dni" />
+          <label htmlFor="telefono">Telefono</label>
+          <input type="text" id="telefono" />
+        </form>
+      </div>
+    </div>
   );
 };
 
-const Usuarios = () => {
-  const [addCliente, setAddCliente] = useState(false);
-
+export const Usuarios = () => {
+  const navigate = useNavigate();
   const [clientes, setClientes] = useState([]);
 
   const columns = [
     { header: "Nombre", key: "nombre" },
     { header: "Apellido", key: "apellido" },
     { header: "DNI", key: "dni" },
-    { header: "telefono", key: "telefono" },
+    { header: "Telefono", key: "telefono" },
   ];
 
   const listaClientes = () => {
@@ -56,7 +57,13 @@ const Usuarios = () => {
     {
       label: "Editar",
       className: "btn-edit",
-      onClick: (cliente) => alert(`Editar: ${cliente.id}`),
+      onClick: (cliente) => {
+        fetch("http://localhost:8080/clientes/listar/" + cliente.id)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          });
+      },
     },
     {
       label: "Eliminar",
@@ -78,8 +85,13 @@ const Usuarios = () => {
       <div className="d-flex justify-content-between">
         <h1>Usuarios</h1>
         <div className="agregar-cliente">
-          <Button onClick={()=>setAddCliente(true)}>Agregar Cliente</Button>
-          <FormCliente view={addCliente} action={() => setAddCliente(false)}/>
+          <Button
+            onClick={() => {
+              navigate("agregar");
+            }}
+          >
+            AgregarCliente
+          </Button>
         </div>
       </div>
       <div className="tabla-clientes">
@@ -90,8 +102,7 @@ const Usuarios = () => {
           actions={actionsCliente}
         />
       </div>
+      <Outlet />
     </>
   );
 };
-
-export default Usuarios;

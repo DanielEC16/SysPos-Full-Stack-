@@ -5,3 +5,23 @@
   .tabla-clientes .content-table {
     width: 100%;
   }
+
+  .form-modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.479);
+    .form-content{
+      width: 35rem;
+      color: white;
+      padding: 20px;
+      background-color: #0b0325;
+      border-radius: 20px;
+    }
+  }

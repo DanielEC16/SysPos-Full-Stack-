@@ -2,13 +2,13 @@ import Login from "./pages/admin/Login";
 import Productos from "./pages/admin/Productos";
 import Navbar from "./components/dashboard/Navbar";
 import Inicio from "./pages/admin/Inicio";
-import Usuarios from "./pages/admin/Usuarios";
+import { FormCliente, Usuarios } from "./pages/admin/Usuarios";
 import Ventas from "./pages/admin/Ventas";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Route, Routes } from 'react-router-dom'
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { Form, Route, Routes } from "react-router-dom";
+import { Table } from "react-bootstrap";
 
 const App = () => {
-
   return (
     <>
       <Routes>
@@ -18,11 +18,14 @@ const App = () => {
           <Route path="inicio" element={<Inicio />} />
           <Route path="productos" element={<Productos />} />
           <Route path="ventas" element={<Ventas />} />
-          <Route path="usuarios" element={<Usuarios />} />
+          <Route path="usuarios" element={<Usuarios />}>
+            <Route path="agregar" element={<FormCliente />} />
+            <Route path="editar-:id" element={<FormCliente/>}/>
+          </Route>
         </Route>
       </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
