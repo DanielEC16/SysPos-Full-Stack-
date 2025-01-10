@@ -18,10 +18,7 @@ const App = () => {
           <Route path="inicio" element={<Inicio />} />
           <Route path="productos" element={<Productos />} />
           <Route path="ventas" element={<Ventas />} />
-          <Route path="usuarios" element={<Usuarios />}>
-            <Route path="agregar" element={<FormCliente />} />
-            <Route path="editar-:id" element={<FormCliente/>}/>
-          </Route>
+          <Route path="usuarios" element={<Usuarios />}/>
         </Route>
       </Routes>
     </>
