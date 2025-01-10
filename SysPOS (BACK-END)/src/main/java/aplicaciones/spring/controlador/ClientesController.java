@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import aplicaciones.spring.modelo.Cliente;
 import aplicaciones.spring.servicios.ClienteService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/clientes")
@@ -35,4 +37,16 @@ public class ClientesController {
 		clienteService.eliminar(id);
 		return "Cliente borrado exitosamente";
 	}
+	
+	
+	@GetMapping("/listar/{id}")
+	public ResponseEntity<Cliente> listarClienteId(@PathVariable Long id) {
+		Cliente cliente = clienteService.obtenerPorId(id);
+		if (cliente != null) {
+	        return ResponseEntity.ok(cliente);  // Retorna el cliente con un código 200 OK
+	    } else {
+	        return ResponseEntity.notFound().build();  // Retorna un 404 si no se encuentra el cliente
+	    }
+	}
+	
 }
