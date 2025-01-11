@@ -16,7 +16,6 @@ public class CorsConfig {
                 registry.addMapping("/**") // Permite todas las rutas
                         .allowedOrigins("*") // Dominio del frontend
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        
                         .allowedHeaders("*");
             }
         };
