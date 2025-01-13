@@ -15,8 +15,8 @@ public class ProductoService {
 	public List<Producto> listar(){
 		return iProducto.findAll();
 	}
-	public void guardar(Producto producto) {
-		iProducto.save(producto);
+	public Producto guardar(Producto producto) {
+		return iProducto.save(producto);
 	}
 	public Producto obtenerPorId(Long id) {
 		return iProducto.findById(id).orElse(null);

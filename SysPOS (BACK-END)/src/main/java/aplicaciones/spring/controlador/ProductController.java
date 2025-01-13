@@ -16,20 +16,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import aplicaciones.spring.modelo.Categoria;
+import aplicaciones.spring.modelo.Cliente;
 import aplicaciones.spring.modelo.Producto;
 import aplicaciones.spring.servicios.CategoriaService;
 import aplicaciones.spring.servicios.ProductoService;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@Controller
-@RequestMapping("/admin/productos")
+
+@RestController
+@RequestMapping("/productos")
 public class ProductController {
 	@Autowired
-	ProductoService pService;
+	ProductoService productoService;
 	@Autowired
 	CategoriaService categoriaService;
+
+	@GetMapping("/listar")
+	public List<Producto> listarProductos() {
+		return productoService.listar();
+	}
+	
+	@PostMapping("/guardar")
+	public Producto guardarProducto(@RequestBody Producto producto) {
+		return productoService.guardar(producto);
+	}
+	
 
 
 }

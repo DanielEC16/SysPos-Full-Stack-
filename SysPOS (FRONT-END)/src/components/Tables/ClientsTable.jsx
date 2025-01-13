@@ -24,37 +24,29 @@ export const ClientsTable = ({ editClient, deletedClient, dataClients }) => {
               </tr>
             </thead>
             <tbody>
-              {dataClients.length > 0 ? (
-                dataClients.map((client, index) => (
-                  <tr key={index}>
-                    <td>{client.id}</td>
-                    <td>{client.nombre}</td>
-                    <td>{client.apellido}</td>
-                    <td>{client.dni}</td>
-                    <td>{client.telefono}</td>
-                    <td>
-                      <button
-                        onClick={() => editClient(client.id)}
-                        className="btn btn-primary"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        onClick={() => deletedClient(client.id)}
-                        className="btn btn-danger"
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="no-data">
-                    No hay datos disponibles
+              {dataClients.map((client, index) => (
+                <tr key={index}>
+                  <td>{client.id}</td>
+                  <td>{client.nombre}</td>
+                  <td>{client.apellido}</td>
+                  <td>{client.dni}</td>
+                  <td>{client.telefono}</td>
+                  <td>
+                    <button
+                      onClick={() => editClient(client.id)}
+                      className="btn btn-primary"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => deletedClient(client.id)}
+                      className="btn btn-danger"
+                    >
+                      Eliminar
+                    </button>
                   </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
         )}

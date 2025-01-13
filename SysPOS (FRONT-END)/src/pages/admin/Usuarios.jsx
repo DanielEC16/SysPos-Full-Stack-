@@ -1,12 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../scss/Usuarios.scss";
 import { Button } from "react-bootstrap";
 import { ClientsTable } from "../../components/Tables/ClientsTable";
+import {
+  ClientFormAdd,
+  ClientFormEdit,
+} from "../../components/Forms/ClientForm";
 
 export const Usuarios = () => {
+  // Estado para guardar todos los clientes
   const [clients, setClients] = useState([]);
+
+  // Estado para guardar un cliente seleccionado
+  const [dataEdit, setDataEdit] = useState(null);
+
+  // Estado de los modales de Editar cliente y Agregar cliente
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  // Estado de loaders y mensajes errors
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const modalAddShow = () => {
+    setShowAddModal(!showAddModal);
+  };
+  const modalEditShow = () => {
+    setShowEditModal(!showEditModal);
+  };
+
   const listClients = async () => {
     setLoading(true);
     setError(null);
@@ -16,7 +38,7 @@ export const Usuarios = () => {
         throw new Error(`Error HTTP: ${response.status}`);
       }
       const data = await response.json();
-      setClients(data); // Actualiza los clientes
+      setClients(data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -25,16 +47,19 @@ export const Usuarios = () => {
   };
   const deleteCli = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/clientes/eliminar/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:8080/clientes/eliminar/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Error al eliminar el cliente");
       }
 
       // Actualizar la lista de clientes después de eliminar
-      setClients(clients.filter(client => client.id !== id));
+      setClients(clients.filter((client) => client.id !== id));
       console.log("Cliente borrado exitosamente");
     } catch (err) {
       setError(err.message);
@@ -43,14 +68,15 @@ export const Usuarios = () => {
 
   const editCli = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/clientes/listar/${id}`);
+      const response = await fetch(
+        `http://localhost:8080/clientes/listar/${id}`
+      );
       if (!response.ok) {
         throw new Error("Error al obtener los datos del cliente");
       }
-
       const data = await response.json();
-      console.log("Datos del cliente para editar:", data);
-      // Aquí puedes actualizar el estado para mostrar el formulario de edición
+      setDataEdit(data);
+      setShowEditModal(true);
     } catch (err) {
       setError(err.message);
     }
@@ -58,19 +84,33 @@ export const Usuarios = () => {
   useEffect(() => {
     listClients();
   }, []);
+
   return (
     <>
       <div className="d-flex justify-content-between">
         <h1>Usuarios</h1>
         <div className="agregar-cliente">
-          <Button>Agregar Cliente</Button>
+          <Button onClick={modalAddShow}>Agregar Cliente</Button>
         </div>
       </div>
       <div className="tabla-clientes">
-        <ClientsTable deletedClient={deleteCli}
+        <ClientsTable
+          deletedClient={deleteCli}
           editClient={editCli}
-          dataClients={clients} />
+          dataClients={clients}
+        />
       </div>
+      <ClientFormAdd
+        show={showAddModal}
+        intercalarView={modalAddShow}
+        listar={listClients}
+      />
+      <ClientFormEdit
+        show={showEditModal}
+        intercalarView={modalEditShow}
+        dataClientEdit={dataEdit}
+        listar={listClients}
+      />
     </>
   );
 };
