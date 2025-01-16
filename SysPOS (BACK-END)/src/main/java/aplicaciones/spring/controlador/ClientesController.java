@@ -1,6 +1,7 @@
 package aplicaciones.spring.controlador;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,13 +35,30 @@ public class ClientesController {
 		return clienteService.guardar(cliente);
 	}
 	
-	@PutMapping("/listar/{id}")
-	public ResponseEntity<Cliente> actualizarCliente(@PathVariable Long id){
+	@GetMapping("/listar/{id}")
+	public ResponseEntity<Cliente> ObtenerCliente(@PathVariable Long id){
 		Cliente cliente = clienteService.obtenerPorId(id);
 		if (cliente != null) {
 	        return new ResponseEntity<>(cliente, HttpStatus.OK); // Cliente encontrado, retorno con código 200
 	    } else {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Cliente no encontrado, retorno con código 404
+	    }
+	}
+	
+	@PutMapping("/actualizar/{id}")
+	public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
+	    Optional<Cliente> cliente = Optional.ofNullable(clienteService.obtenerPorId(id));
+	    if (cliente.isPresent()) {
+	        Cliente clienteActualizado = cliente.get();
+	        clienteActualizado.setNombre(clienteDetails.getNombre());
+	        clienteActualizado.setApellido(clienteDetails.getApellido());
+	        clienteActualizado.setDni(clienteDetails.getDni());
+	        clienteActualizado.setTelefono(clienteDetails.getTelefono());
+	        
+	        clienteService.guardar(clienteActualizado);
+	        return ResponseEntity.ok(clienteActualizado);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	    }
 	}
 
@@ -51,14 +69,6 @@ public class ClientesController {
 	}
 	
 	
-	@GetMapping("/listar/{id}")
-	public ResponseEntity<Cliente> listarClienteId(@PathVariable Long id) {
-		Cliente cliente = clienteService.obtenerPorId(id);
-		if (cliente != null) {
-	        return ResponseEntity.ok(cliente);  // Retorna el cliente con un código 200 OK
-	    } else {
-	        return ResponseEntity.notFound().build();  // Retorna un 404 si no se encuentra el cliente
-	    }
-	}
+
 	
 }
