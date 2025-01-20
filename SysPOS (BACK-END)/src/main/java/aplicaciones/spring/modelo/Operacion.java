@@ -1,8 +1,11 @@
 package aplicaciones.spring.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,6 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -28,6 +32,7 @@ public class Operacion implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
@@ -36,7 +41,7 @@ public class Operacion implements Serializable{
 	private String estado;
 	private String nota;
 	@OneToMany(mappedBy = "operacion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DetalleOperacion> detalles;
+    private List<DetalleOperacion> detalles = new ArrayList<>();
 	@PrePersist
 	public void prePersist() {
 		if (this.fecha== null) {

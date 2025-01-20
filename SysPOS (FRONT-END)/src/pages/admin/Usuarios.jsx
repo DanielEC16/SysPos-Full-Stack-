@@ -59,7 +59,7 @@ export const Usuarios = () => {
       }
 
       // Actualizar la lista de clientes después de eliminar
-      setClients(clients.filter((client) => client.id !== id));
+      listClients();
       console.log("Cliente borrado exitosamente");
     } catch (err) {
       setError(err.message);
@@ -88,7 +88,7 @@ export const Usuarios = () => {
   return (
     <>
       <div className="d-flex justify-content-between">
-        <h1>Usuarios</h1>
+        <h2>Usuarios</h2>
         <div className="agregar-cliente">
           <Button onClick={modalAddShow}>Agregar Cliente</Button>
         </div>

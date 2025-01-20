@@ -17,8 +17,8 @@ public class OperacionesService {
 		return iOperacion.findAll();
 	}
 
-	public void guardar(Operacion operacion) {
-		iOperacion.save(operacion);
+	public Operacion guardar(Operacion operacion) {
+		return iOperacion.save(operacion);
 	}
 
 	public Operacion obtenerPorId(Long id) {
