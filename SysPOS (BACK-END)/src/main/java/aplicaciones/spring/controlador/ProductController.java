@@ -66,6 +66,16 @@ public class ProductController {
 		return "Producto borrado exitosamente";
 	}
 	
+	@GetMapping("/buscarcodigo/{codigo}")
+    public ResponseEntity<Producto> buscarProductoPorCodigo(@PathVariable String codigo) {
+        Producto producto = productoService.buscarProductoPorCodigo(codigo);
+        if (producto != null) {
+            return ResponseEntity.ok(producto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+	
 
 
 }

@@ -2,7 +2,9 @@ package aplicaciones.spring.modelo;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,11 +24,12 @@ public class DetalleOperacion implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "operacion_id", nullable = false)
+    @JsonIgnore
     private Operacion operacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 

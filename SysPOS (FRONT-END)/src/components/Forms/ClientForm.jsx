@@ -29,10 +29,11 @@ export const ClientFormAdd = ({ show, intercalarView, listar }) => {
         setNewClient({ nombre: "", apellido: "", dni: "", telefono: "" });
       } catch (error) {
         console.error("error al agregar cliente", error);
-      } finally {
-        setValidated(true);
+      }finally{
+        setValidated(false);
       }
     }
+    setValidated(true)
   };
 
   return (

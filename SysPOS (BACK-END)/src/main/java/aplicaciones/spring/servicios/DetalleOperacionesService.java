@@ -32,4 +32,7 @@ public class DetalleOperacionesService {
 	public List<DetalleOperacion> listarPorOperacion(Long operacionId) {
 		return iDetalleOperacion.findByOperacionId(operacionId);
 	}
+	public void guardarDetalles(List<DetalleOperacion> detalles) {
+        iDetalleOperacion.saveAll(detalles); // Guardamos todos los detalles en una sola transacción
+    }
 }
